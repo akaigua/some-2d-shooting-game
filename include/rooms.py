@@ -27,8 +27,8 @@ class MiniBoss(BossRoom):
 class Map:
     direction = ["e", "s", "w", "n"]
 
-
     def __init__(self, r=10):
+        rooms = {(0, 0): (Room, Map.direction[random.randint(1, 4)])}
         self.room_numbers = r
         self.available_rooms = {PuzzleRoom: random.randint(1, int(self.room_numbers / 3)),
                                 MiniBoss: random.randint(1, int(self.room_numbers / 3)), FightRoom: 0, BossRoom: 1}
