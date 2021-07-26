@@ -25,6 +25,8 @@ class MiniBoss(BossRoom):
 
 
 class Map:
+    direction = ["e", "s", "w", "n"]
+
 
     def __init__(self, r=10):
         self.room_numbers = r
@@ -43,6 +45,7 @@ class Map:
         current_room = self.available_rooms[
             list(self.available_rooms.keys())[random.randint(0, len(list(iter(self.available_rooms))) - 1)]]
         self.available_rooms[current_room] -= 1
+
         return current_room
 
     def new_room(self):
