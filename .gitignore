@@ -127,3 +127,16 @@ dmypy.json
 
 # Pyre type checker
 .pyre/
+
+
+# IDEs
+# PyCharm
+.idea/
+# VSCode
+.vscode/
+# MacOS
+.DS_Store
+# Sublime
+*.sublime-project
+*.sublime-workspace
+
