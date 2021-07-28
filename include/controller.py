@@ -1,29 +1,36 @@
 import pygame
 
 
-def check_event():
-    left, right, up, attack, leave = [False] * 5
+class input_handling:
+    def __init__(self):
+        self.left, self.right, self.up, self.attack, self.leave = [False] * 5
 
-    for event in pygame.event.get():
-        if event.type == pygame.QUIT:
-            leave = True
-        if event.type == pygame.KEYDOWN:
-            if event.key == pygame.K_ESCAPE:
-                leave = True
-            if event.key == pygame.K_a:
-                left = True
-            if event.key == pygame.K_d:
-                right = True
-            if event.key == pygame.K_SPACE:
-                up = True
-        if event.type == pygame.KEYUP:
-            if event.key == pygame.K_ESCAPE:
-                leave = False
-            if event.key == pygame.K_a:
-                left = False
-            if event.key == pygame.K_d:
-                right = False
-            if event.key == pygame.K_SPACE:
-                up = False
+    def check_event(self):
+        self.attack = False
 
-    return [left, right, up, attack, leave]
+        for event in pygame.event.get():
+            if event.type == pygame.QUIT:
+                self.leave = True
+            if event.type == pygame.KEYDOWN:
+                if event.key == pygame.K_ESCAPE:
+                    self.leave = True
+                if event.key == pygame.K_a:
+                    self.left = True
+                if event.key == pygame.K_d:
+                    self.right = True
+                if event.key == pygame.K_SPACE:
+                    self.up = True
+                if event.key == pygame.K_j:
+                    self.attack = True
+            if event.type == pygame.KEYUP:
+                # You don't need this
+                # if event.key == pygame.K_ESCAPE:
+                #     self.leave = False
+                if event.key == pygame.K_a:
+                    self.left = False
+                if event.key == pygame.K_d:
+                    self.right = False
+                if event.key == pygame.K_SPACE:
+                    self.up = False
+        
+        return [self.left, self.right, self.up, self.attack, self.leave]

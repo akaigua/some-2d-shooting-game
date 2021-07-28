@@ -1,5 +1,5 @@
 import pygame
-import rooms
+#import rooms
 import time
 import renderer
 import random
@@ -14,19 +14,24 @@ class Player(pygame.sprite.Sprite):
     """the characteristic of character
         speed in x,speed in y,the acceleration of speed in x,the acceleration of speed in y,health point,its strength"""
 
-    def __init__(self, speedx, speedy, hp, strength, x, y):
-        self.image = pygame.image.load("some-2d-shooting-game/image/螳螂右 end.png").convert_alpha()  # the image of player
+    def __init__(self, hp, Mx, Mhp, strength):
+        self.image = pygame.image.load("./assets/character_file_compressed/stand_right.png").convert_alpha()  # the image of player
         self.rect = self.image.get_rect()
-        self.w, self.h = pygame.image.load("some-2d-shooting-game/image/螳螂右 end.png").get_rect().size
-        self.speedx = speedx
-        self.speedy = speedy
+        self.w, self.h = pygame.image.load("./assets/character_file_compressed/stand_right.png").get_rect().size
+        self.SCREEN_W = 1000
+        self.SCREEN_H = int(self.SCREEN_W * 2 / 3) 
+        # self.x = 0 + self.w
+        self.x = 0
+        # self.y = self.SCREEN_H - self.h
+        self.y = 0
+        self.speedx = 5
+        self.speedy = 5
         self.hp = hp
-        self.M = Monster()
+        self.Mhp = Mhp
+        self.distance = self.x - Mx
         self.strength = strength
-        self.SCREEN_W = 1024
-        self.SCREEN_H = 768
-        self.x = x
-        self.y = y
+
+        
 
     def move(self, left, right, up):
         if left:
@@ -34,10 +39,12 @@ class Player(pygame.sprite.Sprite):
         elif right:
             self.x += self.speedx
         elif up:
-            self.y = self.speedy
+            self.y += self.speedy
+            time.sleep(0.3)
+            self.y -= self.speedy
         else:
             self.x = 0
-            self.y = -self.speedy
+            #self.y = -self.speedy
 
         if self.x + self.w > self.SCREEN_W:
             self.x = self.SCREEN_W
@@ -51,128 +58,157 @@ class Player(pygame.sprite.Sprite):
         if self.y - self.h < 0:
             self.y = 0
 
+    def display_direction(self):
+        # lack of photo now
+        if self.speedX >= 0:
+            if self.speed == 0:
+                self.image = pygame.image.load("./assets/character_file_compressed/stand_right.png").convert_alpha()
+            else:
+                self.image = pygame.image.load("./assets/character_file_compressed/move_right.png").convert_alpha()
+            return True
+            # towards the right
+        elif self.speedX < 0:
+            if self.speed == 0:
+                self.image = pygame.image.load("./assets/character_file_compressed/stand_left.png").convert_alpha()
+            else:
+                self.image = pygame.image.load("./assets/character_file_compressed/move_right.png").convert_alpha()
+            return False 
+            # towards the left
+            
     def attack(self, attack):
         if attack:
-            if abs(self.x - self.M.x) < 25:
-                self.M.hp -= self.strength
+            if abs(self.distance) < 25:
+                self.Mhp -= self.strength
                 time.sleep(round(random.uniform(0.5, 0.8), 3))
+    
+    def update(self, Mx, My):
+        self.distance = self.x - Mx
 
     def draw(self, surface):
         surface.blit(self.image, (self.x, self.y))
 
-
+'''''
 class Monster(pygame.sprite.Sprite):
-    def __init__(pic, self, x, y, speedx, speedy, hp, strength):
+    def __init__(pic, self, x, y, Px, Py, Php, speedx, hp, strength):
         # The monster would attack the player if their distance is too close or the player has alraedy attack him.
-        '''''
-        Monsters would go towards the player when they are in the same layer. 
-        They also go back and forthin their platform.
+        
+        # Monsters would go towards the player when they are in the same layer. 
+        #They also go back and forthin their platform.
         ## If the player is shooting at them more than three times, they would go towards the player together.
-        The player won't be allowed to go through the door without shooting all of the monsters.
-        '''''
+        #The player won't be allowed to go through the door without shooting all of the monsters.
+        
         self.image = pygame.image.load(pic).convert_alpha()  # the image of player
         self.rect = self.image.get_rect()
         self.w, self.h = pygame.image.load().get_rect().size
         self.x, self.y = x, y
-        self.P = Player()
-        # self.P.x, self.P.y
+        self.distance = self.x - Px
+        self.Px, self.Py = Px, Py
+        self.Php = Php
         self.speedx = speedx
-        self.speedy = speedy
+        self.speedy = 0
         self.hp = hp
         self.strength = strength
 
     def move(self):
-        if self.hp <= 50 or abs(self.y - self.P.y) < 40:
-            # 怪物被激怒的时候的反应
-            if self.x - self.P.x < 0:
+        if self.hp <= 50 or abs(self.distance) < 40:
+            # when the monster is angery
+            if self.distance >= 0:
                 self.speedx += 0.5
-            elif self.x - self.P.x > 0:
+            elif self.distance < 0:
                 self.speedx -= 0.5
             else:
                 self.speedx == 0
         else:
-            # 怪物日常巡游（划水）
-            self.speedx = 2
-            r, l = Monster.collide(self)
+            # walk back and forth when he's peace
+            r, l = self.collide
             if r == False or l == False:
                 self.speedx *= -1
 
+    def display_direction(self):
+        # lack of photo now
+        if self.speedX >= 0:
+            if self.speed == 0:
+                self.image = pass
+            else:
+                self.image = pass
+            return True
+            # towards the right
+        elif self.speedX < 0:
+            if self.speed == 0:
+                self.image = pass
+            else:
+                self.image = pass
+            return False 
+            # towards the left
+
+    def update(self, Px):
+        self.distance = self.x - Px
+
     def collide(self):
-        r, l = True, True
         if self.x + self.w > self.SCREEN_W:
             self.x = self.SCREEN_W
-            return False
-        if self.x - self.w < 0:
+            return  False
+        elif self.x - self.w < 0:
             self.x = 0
-            return False
-
+            return  False
+        
         if self.y + self.h > self.SCREEN_H:
             self.y = self.SCREEN_H
         if self.y - self.h < 0:
-            self.y = 0
-
-        return r, l
+            self.y = 0       
+        return True, True
 
     def damage(self):
-        if abs(self.x - self.P.x) < 25:
-            self.P.hp -= self.strength
+        self.image = pass
+        if abs(self.distance) < 25:
+            self.Php -= self.strength
             time.sleep(round(random.uniform(0.7, 1), 3))
-
-    '''''
-    def dead(self):
-        if self.hp <= 0:
-            return 'dead'
-        else:
-            return 'live'
-    '''''
+        
 
     def draw(self, surface):
         # renderer((self.x, self.y), )
         surface.blit(self.image, (self.x, self.y))
 
+
+
 '''''
-def check_event():
-    left, right, up, attack, leave = [False] * 6
-
-    for event in pygame.event.get():
-        if event.type == pygame.QUIT:
-            leave = True
-        if event.type == pygame.KEYDOWN:
-            if event.key == pygame.K_ESCAPE:
-                leave = True
-            if event.key == pygame.K_a:
-                left = True
-            if event.key == pygame.K_d:
-                right = True
-            if event.key == pygame.K_SPACE:
-                up = True
-        if event.type == pygame.KEYUP:
-            if event.key == pygame.K_ESCAPE:
-                leave = False
-            if event.key == pygame.K_a:
-                left = False
-            if event.key == pygame.K_d:
-                right = False
-            if event.key == pygame.K_SPACE:
-                up = False
-
-    return [left, right, up, attack, leave]
-'''''
-
-    # ------------------
+# ------------------
 
 
-SCREEN_W = 1024
-SCREEN_H = 768
+WIDTH = 1000
+HEIGHT = int(WIDTH * 2 / 3)
+
 
 
 def main():
     pygame.init()
-    surface = pygame.display.set_mode((SCREEN_W, SCREEN_H))
+    surface = pygame.display.set_mode((WIDTH, HEIGHT))
     pygame.display.set_caption("Some 2D Shooting Game")
+    background = pygame.image.load("./assets/backgrounds/background_1.jpg")
+    background = pygame.transform.scale(background, (WIDTH, HEIGHT))
+    running = True
 
-    while True:
-        left, right, jump, attack, leave = check_event()
+    c = Player(100,100, 80, 20)
+    #m = Monster()
+    ctrl = controller.input_handling()
+
+    while running:
+
+        left, right, up, attack, leave = ctrl.check_event()
+
+        if leave:
+            running = False
+        if left:
+            c.x -= c.speedx
+        if right:
+            c.x += c.speedx
+        if up:
+            c.y -= c.speedy
+
+        surface.blit(background, (0, 0))
+        surface = renderer.render(surface=surface, n={(c.x,c.y):c.image})
+        # surface.blit(ch,(ch_x,ch_y))
+        pygame.display.flip()
 
 
 if __name__ == '__main__':
