@@ -3,8 +3,8 @@ import include.controller
 import include.rooms
 import include.renderer
 
-width = 1000
-height = int(width * 2 / 3)
+WIDTH = 1000
+HEIGHT = int(WIDTH * 2 / 3)
 
 
 class example_class:
@@ -20,10 +20,10 @@ class example_class:
 
 def main():
     pygame.init()
-    surface = pygame.display.set_mode((width, height))
+    surface = pygame.display.set_mode((WIDTH, HEIGHT))
     pygame.display.set_caption("Some 2D Shooting Game")
     background = pygame.image.load("./assets/resource_example.png")
-    background = pygame.transform.scale(background, (width, height))
+    background = pygame.transform.scale(background, (WIDTH, HEIGHT))
     running = True
 
     c = example_class()
