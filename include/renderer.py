@@ -1,8 +1,14 @@
 import pygame
 
 
-def render(r: dict):
-    # The r dict should be looked like: {(tuple contain the coordinate of character) : the asset name that needs to be
-    # rendered as a string}
-    for key, value in r:
-        assert type(key) == tuple, "The coordinate must be in a tuple that looks like (x,y)"
+def render(surface, n: dict):
+    for key, value in n.items():
+        assert type(key) , \
+            "The coordinate must be a tuple that looks like (x,y) where x,y is both int"
+        surface.blit(value, key)
+
+    return surface
+
+
+def change_background():
+    pass
