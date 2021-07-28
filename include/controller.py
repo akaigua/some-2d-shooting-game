@@ -6,6 +6,7 @@ class input_handling:
         self.left, self.right, self.up, self.attack, self.leave = [False] * 5
 
     def check_event(self):
+        self.attack = False
 
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
@@ -19,6 +20,8 @@ class input_handling:
                     self.right = True
                 if event.key == pygame.K_SPACE:
                     self.up = True
+                if event.key == pygame.K_j:
+                    self.attack = True
             if event.type == pygame.KEYUP:
                 # You don't need this
                 # if event.key == pygame.K_ESCAPE:

@@ -35,6 +35,7 @@ def main():
     while running:
 
         left, right, up, attack, leave = controller.check_event()
+        print(left, right, up, attack, leave)
         if leave:
             running = False
         if left:
