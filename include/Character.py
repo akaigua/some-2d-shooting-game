@@ -1,3 +1,4 @@
+from _typeshed import Self
 import pygame
 #import rooms
 import time
@@ -60,18 +61,18 @@ class Player(pygame.sprite.Sprite):
 
     def display_direction(self):
         # lack of photo now
-        if self.speedX >= 0:
-            if self.speed == 0:
-                self.image = pygame.image.load("./assets/character_file_compressed/stand_right.png").convert_alpha()
-            else:
+        if self.speedx >= 0:
+            if self.speedx != 0:
                 self.image = pygame.image.load("./assets/character_file_compressed/move_right.png").convert_alpha()
+            else:
+                self.image = pygame.image.load("./assets/character_file_compressed/stand_right.png").convert_alpha()
             return True
             # towards the right
-        elif self.speedX < 0:
-            if self.speed == 0:
-                self.image = pygame.image.load("./assets/character_file_compressed/stand_left.png").convert_alpha()
+        elif self.speedx < 0:
+            if self.speedx != 0:
+                self.image = pygame.image.load("./assets/character_file_compressed/move_left.png").convert_alpha()
             else:
-                self.image = pygame.image.load("./assets/character_file_compressed/move_right.png").convert_alpha()
+                self.image = pygame.image.load("./assets/character_file_compressed/stand_right.png").convert_alpha()
             return False 
             # towards the left
             
@@ -195,6 +196,7 @@ def main():
     while running:
 
         left, right, up, attack, leave = ctrl.check_event()
+        #c.update()
 
         if leave:
             running = False
