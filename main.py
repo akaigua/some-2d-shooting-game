@@ -2,9 +2,11 @@ import pygame
 import include.controller
 import include.rooms
 import include.renderer
+# import utils.pic_compressor
 
 WIDTH = 1000
 HEIGHT = int(WIDTH * 2 / 3)
+SCALE = 0.7
 
 
 class example_class:
