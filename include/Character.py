@@ -1,8 +1,9 @@
 import pygame
-# import rooms
+import rooms
 import time
-# import renderer
+import renderer
 import random
+import controller
 
 
 # from PIL import Image
@@ -129,7 +130,7 @@ class Monster(pygame.sprite.Sprite):
         # renderer((self.x, self.y), )
         surface.blit(self.image, (self.x, self.y))
 
-
+'''''
 def check_event():
     left, right, up, attack, leave = [False] * 6
 
@@ -156,6 +157,7 @@ def check_event():
                 up = False
 
     return [left, right, up, attack, leave]
+'''''
 
     # ------------------
 
