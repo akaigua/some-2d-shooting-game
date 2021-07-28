@@ -16,6 +16,8 @@ class example_class:
         self.stand_left = pygame.image.load("./assets/character_file_compressed/stand_left.png").convert_alpha()
         self.x = 0
         self.y = 0
+        self.speedx = 10
+        self.speedy = 10
 
 
 def main():
@@ -30,17 +32,15 @@ def main():
 
     while running:
 
-        left, right, up, down, attack, leave = include.controller.check_event()
+        left, right, up, attack, leave = include.controller.check_event()
         if leave:
             running = False
         if left:
-            c.x -= 10
+            c.x -= c.speedx
         if right:
-            c.x += 10
+            c.x += c.speedx
         if up:
-            c.y -= 10
-        if down:
-            c.y += 10
+            c.y -= c.speedy
 
         surface.blit(background, (0, 0))
         surface = include.renderer.render(surface=surface, n={(c.x,c.y):c.stand_right})

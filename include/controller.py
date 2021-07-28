@@ -2,7 +2,7 @@ import pygame
 
 
 def check_event():
-    left, right, up, attack, leave = [False] * 6
+    left, right, up, attack, leave = [False] * 5
 
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
