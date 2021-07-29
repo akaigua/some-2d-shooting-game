@@ -13,6 +13,7 @@ class input_handling:
         #self.stop_move_right,self.stop_move_right = [False] * 2
 
         for event in pygame.event.get():
+            self.stop_move_right, self.stop_move_left = [False] * 2
             if event.type == pygame.QUIT:
                 self.leave = True
             if event.type == pygame.KEYDOWN:
@@ -39,5 +40,5 @@ class input_handling:
                 if event.key == pygame.K_w:
                     self.up = False
                     # self.stop_move = True
-        
-        return [self.left, self.right, self.up, self.attack, self.leave,self.stop_move_left,self.stop_move_right]
+
+        return [self.left, self.right, self.up, self.attack, self.leave, self.stop_move_left, self.stop_move_right]
