@@ -39,6 +39,7 @@ def main():
     while running:
 
         left, right, up, attack, leave, stop_move_left, stop_move_right = controller.check_event()
+        print(left, right, up, attack, leave, stop_move_left, stop_move_right)
         if leave:
             running = False
         if left:
@@ -48,9 +49,9 @@ def main():
             c.x += c.speedx
             c.status_avatar = c.move_right
         if stop_move_right:
-            c.status_avatar = c.stand_right
-        if stop_move_left:
             c.status_avatar = c.stand_left
+        if stop_move_left:
+            c.status_avatar = c.stand_right
         if up:
             c.y -= c.speedy
 
