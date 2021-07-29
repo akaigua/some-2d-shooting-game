@@ -9,7 +9,7 @@ import random
 
 WIDTH = 1000
 HEIGHT = int(WIDTH * 2 / 3)
-SCALE = 0.7
+SCALE = 0.5
 
 
 #
@@ -39,7 +39,12 @@ def main():
     while running:
 
         left, right, up, attack, leave, stop_move_left, stop_move_right = controller.check_event()
-        print(left, right, up, attack, leave, stop_move_left, stop_move_right)
+        # print(left, right, up, attack, leave, stop_move_left, stop_move_right)
+        c.move(left,right,up)
+        c.display_direction(left, right, up,stop_move_left, stop_move_right)
+        if leave:
+            running = False
+        '''''
         if leave:
             running = False
         if left:
@@ -54,7 +59,7 @@ def main():
             c.status_avatar = c.stand_right
         if up:
             c.y -= c.speedy
-
+        '''''
         if attack:
             print(f"[INFO] Player has attacked")
 
