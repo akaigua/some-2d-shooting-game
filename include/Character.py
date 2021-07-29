@@ -1,10 +1,6 @@
-from _typeshed import Self
 import pygame
-#import rooms
 import time
-import renderer
 import random
-import controller
 
 
 # from PIL import Image
@@ -15,24 +11,23 @@ class Player(pygame.sprite.Sprite):
     """the characteristic of character
         speed in x,speed in y,the acceleration of speed in x,the acceleration of speed in y,health point,its strength"""
 
-    def __init__(self, hp, Mx, Mhp, strength):
-        self.image = pygame.image.load("./assets/character_file_compressed/stand_right.png").convert_alpha()  # the image of player
+    def __init__(self, mx, max_hp, strength):  # wtf is Mx
+        self.image = pygame.image.load(
+            "./assets/character_file_compressed/stand_right.png").convert_alpha()  # the image of player
         self.rect = self.image.get_rect()
         self.w, self.h = pygame.image.load("./assets/character_file_compressed/stand_right.png").get_rect().size
         self.SCREEN_W = 1000
-        self.SCREEN_H = int(self.SCREEN_W * 2 / 3) 
+        self.SCREEN_H = int(self.SCREEN_W * 2 / 3)
         # self.x = 0 + self.w
         self.x = 0
         # self.y = self.SCREEN_H - self.h
         self.y = 0
         self.speedx = 5
         self.speedy = 5
-        self.hp = hp
-        self.Mhp = Mhp
-        self.distance = self.x - Mx
+        self.hp = max_hp
+        self.Mhp = max_hp
+        self.distance = self.x - mx
         self.strength = strength
-
-        
 
     def move(self, left, right, up):
         if left:
@@ -45,7 +40,7 @@ class Player(pygame.sprite.Sprite):
             self.y -= self.speedy
         else:
             self.x = 0
-            #self.y = -self.speedy
+            # self.y = -self.speedy
 
         if self.x + self.w > self.SCREEN_W:
             self.x = self.SCREEN_W
@@ -73,20 +68,21 @@ class Player(pygame.sprite.Sprite):
                 self.image = pygame.image.load("./assets/character_file_compressed/move_left.png").convert_alpha()
             else:
                 self.image = pygame.image.load("./assets/character_file_compressed/stand_right.png").convert_alpha()
-            return False 
+            return False
             # towards the left
-            
+
     def attack(self, attack):
         if attack:
             if abs(self.distance) < 25:
                 self.Mhp -= self.strength
                 time.sleep(round(random.uniform(0.5, 0.8), 3))
-    
+
     def update(self, Mx, My):
         self.distance = self.x - Mx
 
     def draw(self, surface):
         surface.blit(self.image, (self.x, self.y))
+
 
 '''''
 class Monster(pygame.sprite.Sprite):
@@ -171,47 +167,4 @@ class Monster(pygame.sprite.Sprite):
         surface.blit(self.image, (self.x, self.y))
 
 
-
 '''''
-# ------------------
-
-
-WIDTH = 1000
-HEIGHT = int(WIDTH * 2 / 3)
-
-
-
-def main():
-    pygame.init()
-    surface = pygame.display.set_mode((WIDTH, HEIGHT))
-    pygame.display.set_caption("Some 2D Shooting Game")
-    background = pygame.image.load("./assets/backgrounds/background_1.jpg")
-    background = pygame.transform.scale(background, (WIDTH, HEIGHT))
-    running = True
-
-    c = Player(100,100, 80, 20)
-    #m = Monster()
-    ctrl = controller.input_handling()
-
-    while running:
-
-        left, right, up, attack, leave = ctrl.check_event()
-        #c.update()
-
-        if leave:
-            running = False
-        if left:
-            c.x -= c.speedx
-        if right:
-            c.x += c.speedx
-        if up:
-            c.y -= c.speedy
-
-        surface.blit(background, (0, 0))
-        surface = renderer.render(surface=surface, n={(c.x,c.y):c.image})
-        # surface.blit(ch,(ch_x,ch_y))
-        pygame.display.flip()
-
-
-if __name__ == '__main__':
-    main()
