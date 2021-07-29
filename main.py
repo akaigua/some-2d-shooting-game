@@ -47,8 +47,11 @@ def main():
         start = time.time()
         left, right, up, attack, leave, stop_move_left, stop_move_right = controller.check_event()
         # print(left, right, up, attack, leave, stop_move_left, stop_move_right)
+        c.move(left,right,up)
+        c.display_direction(left, right, up,stop_move_left, stop_move_right)
         if leave:
             running = False
+        '''''
         if left:
             c.x -= c.speedx
             c.status_avatar = c.move_left
@@ -61,7 +64,10 @@ def main():
             c.status_avatar = c.stand_right
         if up:
             c.y -= c.speedy
+        '''''
         c.y = p.physic_handling(last_latency,r)
+        
+        # We have used c.move to replace this code.
         if attack:
             print(f"[INFO] Player has attacked")
 

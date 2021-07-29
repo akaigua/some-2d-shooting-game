@@ -46,6 +46,9 @@ class Player(pygame.sprite.Sprite):
 
         elif self.y < 0:
             up = False
+
+        elif self.y > self.SCREEN_H:
+            self.y = 100
         
         if left:
             self.x -= self.speedx
