@@ -3,6 +3,7 @@ import time
 import random
 
 
+
 # from PIL import Image
 # size = Image.open().size
 
@@ -11,7 +12,7 @@ class Player(pygame.sprite.Sprite):
     """the characteristic of character
         speed in x,speed in y,the acceleration of speed in x,the acceleration of speed in y,health point,its strength"""
 
-    def __init__(self, mx, max_hp, strength):  # wtf is Mx
+    def __init__(self, mx, max_hp, strength):  # Mx is the x value of the Monster
         self.stand_right = pygame.image.load(
             "./assets/character_file_compressed/stand_right.png").convert_alpha()  # the image of player
         self.stand_left = pygame.image.load(
@@ -25,10 +26,9 @@ class Player(pygame.sprite.Sprite):
         self.w, self.h = pygame.image.load("./assets/character_file_compressed/stand_right.png").get_rect().size
         self.SCREEN_W = 1000
         self.SCREEN_H = int(self.SCREEN_W * 2 / 3)
-        # self.x = 0 + self.w
         self.x = 0
-        # self.y = self.SCREEN_H - self.h
-        self.y = 0
+        self.y = self.SCREEN_H - self.h - 53
+        #self.y = 0
         self.speedx = 5
         self.speedy = 5
         self.hp = max_hp
@@ -52,29 +52,28 @@ class Player(pygame.sprite.Sprite):
         if self.x + self.w > self.SCREEN_W:
             self.x = self.SCREEN_W
 
-        if self.x - self.w < 0:
+        if self.x < 0:
             self.x = 0
 
-        if self.y + self.h > self.SCREEN_H:
+        if self.y + self.h >= self.SCREEN_H:
             self.y = self.SCREEN_H
 
         if self.y - self.h < 0:
             self.y = 0
 
     def display_direction(self):
-        # lack of photo now
         if self.speedx >= 0:
             if self.speedx != 0:
-                self.image = pygame.image.load("./assets/character_file_compressed/move_right.png").convert_alpha()
+                self.status_avatar = self.stand_right
             else:
-                self.image = pygame.image.load("./assets/character_file_compressed/stand_right.png").convert_alpha()
+                self.status_avatar = self.move_right
             return True
             # towards the right
         elif self.speedx < 0:
             if self.speedx != 0:
-                self.image = pygame.image.load("./assets/character_file_compressed/move_left.png").convert_alpha()
+                self.status_avatar = self.stand_left
             else:
-                self.image = pygame.image.load("./assets/character_file_compressed/stand_right.png").convert_alpha()
+                self.status_avatar = self.move_left
             return False
             # towards the left
 

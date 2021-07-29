@@ -2,7 +2,7 @@ import pygame
 import include.controller
 import include.rooms
 import include.renderer
-import include.character
+import include.Character
 import random
 
 # import utils.pic_compressor
@@ -34,7 +34,7 @@ def main():
     background = pygame.transform.scale(background, (WIDTH, HEIGHT))
     running = True
 
-    c = include.character.Player(max_hp=random.randint(15, 20), mx=5, strength=random.randint(5, 7))
+    c = include.Character.Player(max_hp=random.randint(15, 20), mx=5, strength=random.randint(5, 7))
     controller = include.controller.input_handling()
     while running:
 

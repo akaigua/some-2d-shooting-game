@@ -8,8 +8,9 @@ class input_handling:
         self.stop_move_right = False
 
     def check_event(self):
-        self.attack = False
-        self.stop_move_right,self.stop_move_right = [False] * 2
+        # we don't need these two lines
+        #self.attack = False
+        #self.stop_move_right,self.stop_move_right = [False] * 2
 
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
@@ -21,7 +22,7 @@ class input_handling:
                     self.left = True
                 if event.key == pygame.K_d:
                     self.right = True
-                if event.key == pygame.K_SPACE:
+                if event.key == pygame.K_w:
                     self.up = True
                 if event.key == pygame.K_j:
                     self.attack = True
@@ -35,7 +36,7 @@ class input_handling:
                 if event.key == pygame.K_d:
                     self.right = False
                     self.stop_move_right = True
-                if event.key == pygame.K_SPACE:
+                if event.key == pygame.K_w:
                     self.up = False
                     # self.stop_move = True
         
