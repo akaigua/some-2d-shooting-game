@@ -3,7 +3,9 @@ import include.controller
 import include.rooms
 import include.renderer
 import include.Character
+import include.physics
 import random
+import time
 
 # import utils.pic_compressor
 
@@ -35,11 +37,16 @@ def main():
     running = True
 
     c = include.Character.Player(max_hp=random.randint(15, 20), mx=5, strength=random.randint(5, 7))
+    p = include.physics.physics(c)
+    r = include.rooms.Room(1)
     controller = include.controller.input_handling()
+    start, end = 0, 0.1
     while running:
 
+        last_latency = end - start
+        start = time.time()
         left, right, up, attack, leave, stop_move_left, stop_move_right = controller.check_event()
-        print(left, right, up, attack, leave, stop_move_left, stop_move_right)
+        # print(left, right, up, attack, leave, stop_move_left, stop_move_right)
         if leave:
             running = False
         if left:
@@ -54,13 +61,14 @@ def main():
             c.status_avatar = c.stand_right
         if up:
             c.y -= c.speedy
-
+        c.y = p.physic_handling(last_latency,r)
         if attack:
             print(f"[INFO] Player has attacked")
 
         surface.blit(background, (0, 0))
         surface = include.renderer.render(surface=surface, n={(c.x, c.y): c.status_avatar})
         pygame.display.flip()
+        end = time.time()
 
 
 if __name__ == '__main__':

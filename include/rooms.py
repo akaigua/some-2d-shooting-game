@@ -12,8 +12,12 @@ PIC_HEIGHT = 384
 
 class Room:
     terrain_location = {
-        1: np.array([[0 / 18, 3 / 12], [0 / 18, 4 / 12], [0 / 18, 5 / 12], [0 / 18, 11 / 12], [1 / 18, 3 / 12]])
+        1: {(0, 3): True, (0, 4): True, (0, 5): True, (0, 11): True, (1, 3): True}
     }
+
+    def __init__(self, room_ID: int):
+        self.room_id = room_ID
+        self.room_structure = Room.terrain_location[1]
 
 
 class Map:

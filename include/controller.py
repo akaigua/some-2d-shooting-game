@@ -9,8 +9,8 @@ class input_handling:
 
     def check_event(self):
         # we don't need these two lines
-        #self.attack = False
-        #self.stop_move_right,self.stop_move_right = [False] * 2
+        # self.attack = False
+        # self.stop_move_right,self.stop_move_right = [False] * 2
 
         for event in pygame.event.get():
             self.stop_move_right, self.stop_move_left = [False] * 2
