@@ -12,9 +12,16 @@ class Player(pygame.sprite.Sprite):
         speed in x,speed in y,the acceleration of speed in x,the acceleration of speed in y,health point,its strength"""
 
     def __init__(self, mx, max_hp, strength):  # wtf is Mx
-        self.image = pygame.image.load(
+        self.stand_right = pygame.image.load(
             "./assets/character_file_compressed/stand_right.png").convert_alpha()  # the image of player
-        self.rect = self.image.get_rect()
+        self.stand_left = pygame.image.load(
+            "./assets/character_file_compressed/stand_left.png").convert_alpha()  # the image of player
+        self.move_left = pygame.image.load(
+            "./assets/character_file_compressed/move_left.png").convert_alpha()
+        self.move_right = pygame.image.load(
+            "./assets/character_file_compressed/move_right.png").convert_alpha()
+        self.status_avatar = self.stand_right
+        self.rect = self.stand_right.get_rect()
         self.w, self.h = pygame.image.load("./assets/character_file_compressed/stand_right.png").get_rect().size
         self.SCREEN_W = 1000
         self.SCREEN_H = int(self.SCREEN_W * 2 / 3)

@@ -4,9 +4,12 @@ import pygame
 class input_handling:
     def __init__(self):
         self.left, self.right, self.up, self.attack, self.leave = [False] * 5
+        self.stop_move_left = False
+        self.stop_move_right = False
 
     def check_event(self):
         self.attack = False
+        self.stop_move_right,self.stop_move_right = [False] * 2
 
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
@@ -28,9 +31,12 @@ class input_handling:
                 #     self.leave = False
                 if event.key == pygame.K_a:
                     self.left = False
+                    self.stop_move_left = True
                 if event.key == pygame.K_d:
                     self.right = False
+                    self.stop_move_right = True
                 if event.key == pygame.K_SPACE:
                     self.up = False
+                    # self.stop_move = True
         
-        return [self.left, self.right, self.up, self.attack, self.leave]
+        return [self.left, self.right, self.up, self.attack, self.leave,self.stop_move_left,self.stop_move_right]

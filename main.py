@@ -38,13 +38,19 @@ def main():
     controller = include.controller.input_handling()
     while running:
 
-        left, right, up, attack, leave = controller.check_event()
+        left, right, up, attack, leave, stop_move_left, stop_move_right = controller.check_event()
         if leave:
             running = False
         if left:
             c.x -= c.speedx
+            c.status_avatar = c.move_left
         if right:
             c.x += c.speedx
+            c.status_avatar = c.move_right
+        if stop_move_right:
+            c.status_avatar = c.stand_right
+        if stop_move_left:
+            c.status_avatar = c.stand_left
         if up:
             c.y -= c.speedy
 
@@ -52,7 +58,7 @@ def main():
             print(f"[INFO] Player has attacked")
 
         surface.blit(background, (0, 0))
-        surface = include.renderer.render(surface=surface, n={(c.x, c.y): c.image})
+        surface = include.renderer.render(surface=surface, n={(c.x, c.y): c.status_avatar})
         pygame.display.flip()
 
 
