@@ -37,51 +37,44 @@ class Player(pygame.sprite.Sprite):
         self.strength = strength
 
     def move(self, left, right, up):
+        #while self.collision()
+        if self.x + self.w - 21 > self.SCREEN_W:
+            right = False
+
+        elif self.x + 24 < 0:
+            left = False
+
+        elif self.y < 0:
+            up = False
+        
         if left:
             self.x -= self.speedx
         elif right:
             self.x += self.speedx
         elif up:
-            self.y += self.speedy
-            time.sleep(0.3)
             self.y -= self.speedy
-        else:
-            self.x = 0
+        
             # self.y = -self.speedy
-
-        if self.x + self.w > self.SCREEN_W:
-            self.x = self.SCREEN_W
-
-        if self.x < 0:
-            self.x = 0
-
-        if self.y + self.h >= self.SCREEN_H:
-            self.y = self.SCREEN_H
-
-        if self.y - self.h < 0:
-            self.y = 0
-
-    def display_direction(self):
-        if self.speedx >= 0:
-            if self.speedx != 0:
-                self.status_avatar = self.stand_right
-            else:
-                self.status_avatar = self.move_right
+                
+    def display_direction(self,left, right, up, stop_move_left, stop_move_right):
+        if left:
+            self.status_avatar = self.move_left
             return True
             # towards the right
-        elif self.speedx < 0:
-            if self.speedx != 0:
-                self.status_avatar = self.stand_left
-            else:
-                self.status_avatar = self.move_left
+        if right:
+            self.status_avatar = self.move_right
             return False
             # towards the left
+        if stop_move_right:
+            self.status_avatar = self.stand_left
+        if stop_move_left:
+            self.status_avatar = self.stand_right
 
     def attack(self, attack):
         if attack:
             if abs(self.distance) < 25:
                 self.Mhp -= self.strength
-                time.sleep(round(random.uniform(0.5, 0.8), 3))
+                #time.sleep(round(random.uniform(0.5, 0.8), 3))
 
     def update(self, Mx, My):
         self.distance = self.x - Mx
