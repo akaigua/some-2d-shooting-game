@@ -36,21 +36,22 @@ class Player(pygame.sprite.Sprite):
         self.distance = self.x - mx
         self.strength = strength
 
-    def move(self, left, right, up):
+    def move(self, left, right, up, c_right, c_left, c_up):
         #while self.collision()
-        if self.x + self.w - 40 > self.SCREEN_W:
+        if self.x + self.w - 40 > self.SCREEN_W or c_right == 'right':
             right = False
 
-        if self.x + 24 < 0:
+        if self.x + 24 < 0 or c_left == 'left':
             left = False
 
-        if self.y < 0:
-            print("asd")
+        if self.y < 0 or c_up == 'up':
             up = False
 
+        # for testing
         if self.y > self.SCREEN_H:
             self.y = 100
-        
+        #for testing
+
         if left:
             self.x -= self.speedx
         if right:
