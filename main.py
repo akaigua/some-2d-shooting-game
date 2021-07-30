@@ -11,7 +11,7 @@ import time
 
 WIDTH = 1000
 HEIGHT = int(WIDTH * 2 / 3)
-SCALE = 0.7
+SCALE = 0.4
 
 
 #

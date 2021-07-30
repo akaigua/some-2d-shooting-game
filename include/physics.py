@@ -18,7 +18,8 @@ class physics:
         h = self.c.status_avatar.get_height()
         w = self.c.status_avatar.get_width()
         # print((int((self.c.x + w)/WIDTH*18-1), (int((self.c.y + h)/HEIGHT*12))))
-        if m.room_structure.get((int((self.c.x + w) / WIDTH * 18 - 1), (int((self.c.y + h) / HEIGHT * 12))), None):
+        if m.room_structure.get((int((self.c.x + w) / WIDTH * 18 - 1),\
+            (int((self.c.y + h) / HEIGHT * 12))), None):
             self.in_air_time = 0
         else:
             self.in_air_time += lat
