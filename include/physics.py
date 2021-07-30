@@ -20,8 +20,10 @@ class physics:
         # print((int((self.c.x + w)/WIDTH*18-1), (int((self.c.y + h)/HEIGHT*12))))
         if m.room_structure.get((int((self.c.x + w) / WIDTH * 18 - 1), (int((self.c.y + h) / HEIGHT * 12))), None):
             self.in_air_time = 0
-        self.in_air_time += lat
+        else:
+            self.in_air_time += lat
+
 
     def physic_handling(self, latency: float,m:include.rooms.Room):
         self.__in_air(latency,m)
-        return self.c.y + 0.5 * G * (self.in_air_time**2)
+        return self.c.y + 0.25 * G * (self.in_air_time**2)
