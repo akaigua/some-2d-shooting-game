@@ -14,17 +14,19 @@ class physics:
         self.c = c
         self.in_air_time = 0
 
-    def __in_air(self, lat, m: include.rooms.Room):
+    def __in_air(self, lat, m: include.rooms.Room, c_bottom):
         h = self.c.status_avatar.get_height()
         w = self.c.status_avatar.get_width()
         # print((int((self.c.x + w)/WIDTH*18-1), (int((self.c.y + h)/HEIGHT*12))))
-        if m.room_structure.get((int((self.c.x + w) / WIDTH * 18 - 1),\
-            (int((self.c.y + h) / HEIGHT * 12))), None):
+        # if  m.room_structure.get((int((self.c.x + w) / WIDTH * 18 - 1),\
+           # (int((self.c.y + h) / HEIGHT * 12))), None) or 
+        if c_bottom:
             self.in_air_time = 0
         else:
             self.in_air_time += lat
 
 
-    def physic_handling(self, latency: float,m:include.rooms.Room):
-        self.__in_air(latency,m)
+    def physic_handling(self, latency: float,m:include.rooms.Room,c_bottom):
+        self.__in_air(latency,m,c_bottom)
         return self.c.y + 0.25 * G * (self.in_air_time**2)
+

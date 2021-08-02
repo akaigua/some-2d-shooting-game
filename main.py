@@ -38,6 +38,7 @@ def main():
 
     c = include.Character.Player(max_hp=random.randint(15, 20), mx=5, strength=random.randint(5, 7))
     p = include.physics.physics(c)
+    map = include.rooms.Map()
     r = include.rooms.Room(1)
     controller = include.controller.input_handling()
     start, end = 0, 0.1
@@ -47,7 +48,10 @@ def main():
         start = time.time()
         left, right, up, attack, leave, stop_move_left, stop_move_right = controller.check_event()
         # print(left, right, up, attack, leave, stop_move_left, stop_move_right)
-        c.move(left,right,up)
+        _ = r.collide(map.map_1(),c)
+        print(_)
+        c_up, c_left, c_right, c_bottom = _
+        c.move(left,right,up,c_right, c_left, c_up)
         c.display_direction(left, right, up,stop_move_left, stop_move_right)
         if leave:
             running = False
@@ -65,7 +69,7 @@ def main():
         if up:
             c.y -= c.speedy
         '''''
-        c.y = p.physic_handling(last_latency,r)
+        c.y = p.physic_handling(last_latency,r,c_bottom)
         
         # We have used c.move to replace this code.
         if attack:
