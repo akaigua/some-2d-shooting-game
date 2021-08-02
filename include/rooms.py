@@ -49,5 +49,4 @@ class Map:
                  [15,5,3,1],[17,2,1,4],[16,10,2,1],[17,9,1,1],[0,11,18,1]]
         self.rect_list = []
         for i in range(len(nlist)):
-            self.rect_list.append(
-                pygame.Rect(nlist[i][0] * 32, nlist[i][1] * 32, nlist[i][2] * 32, nlist[i][3] * 32))
+            self.rect_list.append(pygame.Rect(nlist[i][0] * 32, nlist[i][1] * 32, nlist[i][2] * 32, nlist[i][3] * 32))
