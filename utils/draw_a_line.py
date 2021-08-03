@@ -1,6 +1,6 @@
 from PIL import Image, ImageDraw
 #
-img = Image.open("/Users/victor/PycharmProjects/some-2d-shooting-game/assets/backgrounds/background_3.jpg")
+img = Image.open("/some-2d-shooting-game/assets/backgrounds/background_3.jpg")
 draw = ImageDraw.Draw(img)
 # draw.line()
 
