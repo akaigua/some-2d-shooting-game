@@ -3,7 +3,6 @@ import time
 import random
 
 
-
 # from PIL import Image
 # size = Image.open().size
 
@@ -27,8 +26,8 @@ class Player(pygame.sprite.Sprite):
         self.SCREEN_W = 1000
         self.SCREEN_H = int(self.SCREEN_W * 2 / 3)
         self.x = 0
-        self.y = self.SCREEN_H - self.h - 53
-        #self.y = 0
+        self.y = self.SCREEN_H - self.h - 53  # Why you did this to me
+        # self.y = 0
         self.speedx = 5
         self.speedy = 5
         self.hp = max_hp
@@ -37,7 +36,7 @@ class Player(pygame.sprite.Sprite):
         self.strength = strength
 
     def move(self, left, right, up, c_right, c_left, c_up):
-        #while self.collision()
+        # while self.collision()
         if self.x + self.w - 40 > self.SCREEN_W or c_right == 'right':
             right = False
 
@@ -50,7 +49,7 @@ class Player(pygame.sprite.Sprite):
         # for testing
         if self.y > self.SCREEN_H:
             self.y = 100
-        #for testing
+        # for testing
 
         if left:
             self.x -= self.speedx
@@ -58,10 +57,10 @@ class Player(pygame.sprite.Sprite):
             self.x += self.speedx
         if up:
             self.y -= self.speedy
-        
+
             # self.y = -self.speedy
-                
-    def display_direction(self,left, right, up, stop_move_left, stop_move_right):
+
+    def display_direction(self, left, right, up, stop_move_left, stop_move_right):
         if left:
             self.status_avatar = self.move_left
             return True
@@ -79,7 +78,7 @@ class Player(pygame.sprite.Sprite):
         if attack:
             if abs(self.distance) < 25:
                 self.Mhp -= self.strength
-                #time.sleep(round(random.uniform(0.5, 0.8), 3))
+                # time.sleep(round(random.uniform(0.5, 0.8), 3))
 
     def update(self, Mx, My):
         self.distance = self.x - Mx
