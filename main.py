@@ -11,7 +11,7 @@ import time
 
 WIDTH = 1000
 HEIGHT = int(WIDTH * 2 / 3)
-SCALE = 0.4
+SCALE = 0.7
 
 
 #
@@ -32,7 +32,8 @@ def main():
     pygame.init()
     surface = pygame.display.set_mode((WIDTH, HEIGHT))
     pygame.display.set_caption("Some 2D Shooting Game")
-    background = pygame.image.load("./assets/backgrounds/background_1.jpg")
+    # background = pygame.image.load("./assets/backgrounds/background_1.jpg")
+    background = pygame.image.load("./assets/debug_resource/debug_m1.png")
     background = pygame.transform.scale(background, (WIDTH, HEIGHT))
     running = True
 
@@ -41,45 +42,42 @@ def main():
     r = include.rooms.Room(1)
     controller = include.controller.input_handling()
     start, end = 0, 0.1
-    for i in range(len(r.Mxy_list)):
-        m = include.Character.Monster(r.Mxy_list[0], r.Mxy_list[1], c.x, c.hp, 4, random.randint(15, 20), strength=random.randint(3, 5))
-    
-
     while running:
 
         last_latency = end - start
         start = time.time()
         left, right, up, attack, leave, stop_move_left, stop_move_right = controller.check_event()
-        
-        #_ = r.collide(map.map_1(),c)
-        #c_up, c_left, c_right, c_bottom = _
-        #print(c_up, c_left, c_right, c_bottom)
-        c.move(left,right,up)
-        c.update(m.x,m.hp)
-        m.update(c.x,c.hp)
-        c.display_direction(left, right, up, stop_move_left, stop_move_right)
-        if c.hp <= 0:
-            c.x, c.y = 0, self.SCREEN_H - self.h - 53
-        if m.hp <= 0:
-            pass
-            #如何实现让死亡的怪兽消失
-
+        # print(left, right, up, attack, leave, stop_move_left, stop_move_right)
+        left_col,right_col = p.side_by_side(r)
+        head = p.head_by_head(r)
         if leave:
             running = False
+        if left and not left_col:
+            c.x -= c.speedx
+            c.status_avatar = c.move_left
+        if right and not right_col:
+            c.x += c.speedx
+            c.status_avatar = c.move_right
+        if stop_move_right:
+            c.status_avatar = c.stand_left
+        if stop_move_left:
+            c.status_avatar = c.stand_right
+        if up and not head:
+            c.y -= c.speedy
         c.y = p.physic_handling(last_latency,r)
-        # c.rect.topleft = (c.x, c.y)
-        #pygame.Rect.move_ip(c.rect, c.x, c.y)
-        #print(c.rect)
-
-        
-        # We have used c.move to replace this code.
         if attack:
             print(f"[INFO] Player has attacked")
+
+
+
+        # Update
 
         surface.blit(background, (0, 0))
         surface = include.renderer.render(surface=surface, n={(c.x, c.y): c.status_avatar})
         pygame.display.flip()
         end = time.time()
+        # FPS display
+        # print(f"[INFO] FPS: {1/last_latency}")
 
 
 if __name__ == '__main__':
