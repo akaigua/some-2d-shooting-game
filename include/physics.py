@@ -56,7 +56,7 @@ class physics:
 
         head_collide = False
 
-        if m.room_structure.get((left_side_block+1,head),None):
+        if m.room_structure.get((left_side_block,head),None):
             head_collide = True
 
         return head_collide
