@@ -27,6 +27,7 @@ class Player(pygame.sprite.Sprite):
         self.SCREEN_H = int(self.SCREEN_W * 2 / 3)
         self.x = 0
         self.y = self.SCREEN_H - self.h - 53  # Why you did this to me
+        self.abs_y = self.SCREEN_H - self.y
         # self.y = 0
         self.speedx = 5
         self.speedy = 5
