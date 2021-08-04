@@ -54,10 +54,10 @@ class Player(pygame.sprite.Sprite):
             self.y -= self.speedy
         '''''
             # self.y = -self.speedy
-        if self.x + self.w - 40 > self.SCREEN_W:
+        if self.x + self.w > self.SCREEN_W:
             right = False
 
-        if self.x + 24 < 0:
+        if self.x < 0:
             left = False
 
         if self.y < 0:
@@ -68,8 +68,6 @@ class Player(pygame.sprite.Sprite):
             self.status_avatar = self.move_left
 
         if right and not right_col:
-            print('collide',right_col)
-            print('right',right)
             self.x += self.speedx
             self.status_avatar = self.move_right
 

@@ -97,13 +97,14 @@ class Map:
 
 class Room:
     terrain_location = {
-        1: {(0, 11): True, (1, 11): True, (2, 11): True, (3, 11): True, (4, 11): True, (5, 11): True, (6, 11): True, (7, 11): True, (8, 11): True,
+        1: {(0, 11): True, (1, 11): True, (2, 11): True, (3, 11): True, (4, 11): True, (5, 11): True, (7, 11): True, (8, 11): True,
             (9, 11): True, (10, 11): True, (11, 11): True, (12, 11): True, (13, 11): True, (14, 11): True, (15, 11): True, (16, 11): True, (17, 11): True,
-            (0, 3): True, (1, 3): True, (2, 3): True, (0, 7): True, (1, 7): True, (2, 7): True, (3, 7): True, (4, 7): True, 
-            (4, 6): True, (4, 5): True, (5 ,5): True, (7,2): True, (8, 2): True, (9, 2): True, (8, 7): True, (9, 7): True, (10, 7): True, (8, 7): True,
+            (0, 3): True, (1, 3): True, (2, 3): True, (0, 7): True, (2, 7): True, (3, 7): True, (4, 7): True,
+            (4, 6): True, (4, 5): True, (5 ,5): True, (7,2): True, (9, 2): True, (8, 7): True, (9, 7): True, (8, 7): True,
             (8, 8): True, (8, 9): True, (8, 10): True, (16, 0): True, (17, 0): True, (17, 1): True, (17, 2): True, (17, 3): True,
-            (16,8): True, (17, 8): True, (17, 7): True, (11, 4): True, (12, 4): True, (13, 4): True, (14, 4): True},
+            (16,8): True, (17, 8): True, (17, 7): True, (11, 4): True, (12, 4): True, (13, 4): True, (14, 4): True, (13,10): True, (13,9): True},
 
+            
         2: {(0, 11): True, (1, 11): True, (2, 11): True, (3, 11): True, (4, 11): True, (5, 11): True, (6, 11): True, (7, 11): True, (8, 11): True,
             (9, 11): True, (10, 11): True, (11, 11): True, (12, 11): True, (13, 11): True, (14, 11): True, (15, 11): True, (16, 11): True, (17, 11): True,
             (0, 0): True, (0, 1): True, (0, 2): True, (1, 2): True, (2, 2): True, (3, 2): True, (0, 5): True, (0, 6): True, (3, 8): True,
@@ -148,9 +149,9 @@ class Room:
         }}
     
     Monster_Dic = {
-        1 : {(1,5), True, (0,2), True, (5,9), True, (12,2), True, (11,9), True, (14,9), True},
-        2 : {(2,0), True,(9,1), True, (11,5), True, (8,9), True, (12,9), True, (4,6), True},
-        3 : {(5,1), True, (9,1), True, (10,5), True, (7,9), True, (12,9), True, (14,1), True},
+        1 : {(1,5): True, (0,2): True, (5,9): True, (12,2): True, (11,9): True, (14,9): True},
+        2 : {(2,0): True,(9,1): True, (11,5): True, (8,9): True, (12,9): True, (4,6): True},
+        3 : {(5,1): True, (9,1): True, (10,5): True, (7,9): True, (12,9): True, (14,1): True},
         #need two more enermy positions 
 
 
