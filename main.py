@@ -81,6 +81,14 @@ def main():
         if attack:
             print(f"[INFO] Player has attacked")
 
+
+        font1 = pygame.font.SysFont('宋体', 16, True)
+        font_list = pygame.font.get_fonts()
+        score_font = pygame.font.Font('score_font.ttf', 16)
+        surface_score = font1.render('Time you spend:', True, [255, 0, 0])
+        surface.blit(background, [16*32, 0])
+
+
         surface.blit(background, (0, 0))
         surface = include.renderer.render(surface=surface, n={(c.x, c.y): c.status_avatar})
         pygame.display.flip()
