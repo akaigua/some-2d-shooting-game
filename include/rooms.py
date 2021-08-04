@@ -29,7 +29,7 @@ class Room:
 
     def __init__(self, room_ID: int):
         self.room_id = room_ID
-        self.room_structure = Room.terrain_location[1]
+        self.room_structure = Room.terrain_location[room_ID]
 
 
 class Map:

@@ -1,14 +1,24 @@
 import pygame
 
+WIDTH = 1000
+HEIGHT = int(WIDTH * 2 / 3)
 
 def render(surface, n: dict):
     for key, value in n.items():
-        assert type(key) , \
-            "The coordinate must be a tuple that looks like (x,y) where x,y is both int"
         surface.blit(value, key)
 
     return surface
 
 
-def change_background():
-    pass
+class BackgroundChanger:
+
+    def __init__(self):
+        self.background_id = 1
+
+    def background(self, id:int = None):
+        if id != self.background_id:
+            self.background_id = id
+        print(f"../assets/backgrounds/background_{self.background_id}.jpg")
+        background = pygame.image.load(f"./assets/backgrounds/background_{self.background_id}.jpg")
+        background = pygame.transform.scale(background, (WIDTH, HEIGHT))
+        return background
