@@ -3,7 +3,7 @@ import pygame
 
 class input_handling:
     def __init__(self):
-        self.left, self.right, self.up, self.attack, self.leave = [False] * 5
+        self.left, self.right, self.up, self.attack, self.leave, self.timer = [False] * 6
         self.stop_move_left = False
         self.stop_move_right = False
 
@@ -27,6 +27,8 @@ class input_handling:
                     self.up = True
                 if event.key == pygame.K_j:
                     self.attack = True
+                if event.key == pygame.K_t:
+                    self.timer = True
             if event.type == pygame.KEYUP:
                 # You don't need this
                 # if event.key == pygame.K_ESCAPE:
@@ -39,6 +41,8 @@ class input_handling:
                     self.stop_move_right = True
                 if event.key == pygame.K_w:
                     self.up = False
+
                     # self.stop_move = True
 
-        return [self.left, self.right, self.up, self.attack, self.leave, self.stop_move_left, self.stop_move_right]
+
+        return [self.left, self.right, self.up, self.attack, self.leave, self.stop_move_left, self.stop_move_right, self.timer]

@@ -41,13 +41,12 @@ def main():
     p = include.physics.physics(c)
     # r = include.rooms.Room(1)
     r1,r2,r3,r4,r5 = [include.rooms.Room(i) for i in range(1,6)]
-    rs = {1:r1,2:r2,3:r3,4:r4,5:r5}
     bg = include.renderer.BackgroundChanger()
     controller = include.controller.input_handling()
     start, end = 0, 0.1
     bg_id = 1
     while running:
-        r = rs[bg_id]
+        exec
         background = bg.background(bg_id)
         # if c.x == 0 and bg_id > 1:
         #     bg_id -= 1

@@ -2,7 +2,7 @@ import include.Character
 import include.rooms
 import numpy as np
 
-G = 150
+G = 10
 
 WIDTH = 1000
 HEIGHT = int(WIDTH * 2 / 3)
