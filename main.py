@@ -63,7 +63,7 @@ def main():
         # print(monster_list[0].x,monster_list[0].y)
         print(bg_id)
         monster_render_list = {(mons.x/18*WIDTH, mons.y/12*HEIGHT): mons.status_avatar for mons in monster_list}
-
+        
         last_latency = end - start
         start = time.time()
         left, right, up, attack, leave, stop_move_left, stop_move_right, timer, reset = controller.check_event()
