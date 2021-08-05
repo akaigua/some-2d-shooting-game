@@ -6,6 +6,7 @@ import include.Character
 import include.physics
 import random
 import time
+import math
 
 # import utils.pic_compressor
 
@@ -94,9 +95,14 @@ def main():
         surface = include.renderer.render(surface=surface, n=monster_render_list)
         pygame.display.flip()
         end = time.time()
+        # print(math.sqrt((i.x-c.x)**2 + (i.y-c.y)**2))
+        collides = []
+        for i in monster_list:
+            collides.append(math.sqrt((i.x/18*WIDTH-c.x)**2 + (i.y/12*HEIGHT-c.y)**2))
+        if min(collides) < 30:
+            print("YOU DIED")   # change this to dead display
         # FPS display
         # print(f"[INFO] FPS: {1/last_latency}")
-
 
 if __name__ == '__main__':
     main()
