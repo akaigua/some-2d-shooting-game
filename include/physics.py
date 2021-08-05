@@ -11,7 +11,7 @@ HEIGHT = int(WIDTH * 2 / 3)
 
 class physics:
 
-    def __init__(self, c: include.Character.Player):
+    def __init__(self, c):
         self.c = c
         self.in_air_time = 0
 

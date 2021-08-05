@@ -58,10 +58,10 @@ def main():
             c.y = HEIGHT - c.h - 53
             c.x = 0
 
-        # Draw Monster
 
         # monster_list = [include.Character.Monster(i) for i in include.rooms.Room.Monster_Dic[bg_id].keys()]
         monster_render_list = {(mons.x/18*WIDTH, mons.y/12*HEIGHT): mons.status_avatar for mons in monster_list}
+
 
         last_latency = end - start
         start = time.time()

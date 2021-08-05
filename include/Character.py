@@ -116,22 +116,22 @@ class Player(pygame.sprite.Sprite):
 
 
 class Monster(pygame.sprite.Sprite):
-    def __init__(self, lc:tuple):
+    def __init__(self, lc: tuple):
         # The monster would attack the player if their distance is too close or the player has alraedy attack him.
 
         # Monsters would go towards the player when they are in the same layer. 
         # They also go back and forth in their platform.
         # If the player is shooting at them more than three times, they would go towards the player together.
         # The player won't be allowed to go through the door without shooting all of the monsters.
-        x,y = lc
-        self.stand_right = pygame.image.load(
-            "./assets/character_file_compressed/Monster1_stand_right_1.png").convert_alpha()  # the image of player
-        self.stand_left = pygame.image.load(
-            "./assets/character_file_compressed/Monster1_stand_left_1.png").convert_alpha()  # the image of player
-        self.move_left = pygame.image.load(
-            "./assets/character_file_compressed/Monster1_move_left _1.png").convert_alpha()
-        self.move_right = pygame.image.load(
-            "./assets/character_file_compressed/Monster1_move_right_1.png").convert_alpha()
+        x, y = lc
+        self.stand_right = pygame.transform.scale(pygame.image.load(
+            "./assets/character_file_compressed/Monster_stand_right.png").convert_alpha(), (48, 42))
+        self.stand_left = pygame.transform.scale(pygame.image.load(
+            "./assets/character_file_compressed/Monster_stand_left.png").convert_alpha(), (48, 42))
+        self.move_left = pygame.transform.scale(pygame.image.load(
+            "./assets/character_file_compressed/Monster_move_left.png").convert_alpha(), (48, 42))
+        self.move_right = pygame.transform.scale(pygame.image.load(
+            "./assets/character_file_compressed/Monster_move_right.png").convert_alpha(), (48, 42))
         self.status_avatar = self.stand_right  # the image of Monster
 
         self.rect = self.stand_left.get_rect()
@@ -145,21 +145,18 @@ class Monster(pygame.sprite.Sprite):
         self.face_right = False
         self.last_move = 0
 
-    def move(self,lat):
+    def move(self, lat):
         self.last_move = lat + self.last_move
-        if self.last_move >= 2:
+        if self.last_move >= 0.5:  # change this plz
             if self.face_right:
-                print("hello?")
                 self.status_avatar = self.move_left
                 self.x -= MONSTER_SPEED
             else:
-                print("hello!")
                 self.x += MONSTER_SPEED
                 self.status_avatar = self.move_right
-        if self.last_move > 3:
+        if self.last_move > 1:  # change this plz
             self.last_move = 0
             self.face_right = not self.face_right
-
 
     #
     # def update(self, Px, Php):
