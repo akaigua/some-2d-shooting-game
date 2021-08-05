@@ -3,7 +3,7 @@ import include.rooms
 import numpy as np
 import math
 
-G = 10
+G = 37
 
 WIDTH = 1000
 HEIGHT = int(WIDTH * 2 / 3)
@@ -42,10 +42,10 @@ class physics:
         #         (right_side_block, head - 1),None) , m.room_structure.get((right_side_block, head - 2),None))
 
         if m.room_structure.get((left_side_block, head), None) or m.room_structure.get(
-                (left_side_block, head + 1), None) or m.room_structure.get((left_side_block, head + 2), None):
+                (left_side_block, head + 1), None):
             left_side_collide = True
         if m.room_structure.get((right_side_block, head), None) or m.room_structure.get(
-                (right_side_block, head + 1), None) or m.room_structure.get((right_side_block, head + 2), None):
+                (right_side_block, head + 1), None):
             right_side_collide = True
 
         return [left_side_collide, right_side_collide]

@@ -6,6 +6,7 @@ class input_handling:
         self.left, self.right, self.up, self.attack, self.leave, self.timer = [False] * 6
         self.stop_move_left = False
         self.stop_move_right = False
+        self.reset = False
 
     def check_event(self):
         # we don't need these two lines
@@ -29,6 +30,8 @@ class input_handling:
                     self.attack = True
                 if event.key == pygame.K_t:
                     self.timer = True
+                if event.key == pygame.K_SPACE:
+                    self.reset = True
             if event.type == pygame.KEYUP:
                 # You don't need this
                 # if event.key == pygame.K_ESCAPE:
@@ -41,8 +44,10 @@ class input_handling:
                     self.stop_move_right = True
                 if event.key == pygame.K_w:
                     self.up = False
+                if event.key == pygame.K_SPACE:
+                    self.reset = False
 
                     # self.stop_move = True
 
 
-        return [self.left, self.right, self.up, self.attack, self.leave, self.stop_move_left, self.stop_move_right, self.timer]
+        return [self.left, self.right, self.up, self.attack, self.leave, self.stop_move_left, self.stop_move_right, self.timer, self.reset]
