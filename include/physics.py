@@ -3,7 +3,7 @@ import include.rooms
 import numpy as np
 import math
 
-G = 37
+G = 33
 
 WIDTH = 1000
 HEIGHT = int(WIDTH * 2 / 3)

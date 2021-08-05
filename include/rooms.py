@@ -97,6 +97,7 @@ class Map:
 
 class Room:
     terrain_location = {
+        0: {},
         1: {(0, 11): True, (1, 11): True, (2, 11): True, (3, 11): True, (4, 11): True, (5, 11): True, (6, 11): True,
             (7, 11): True, (8, 11): True,
             (9, 11): True, (10, 11): True, (11, 11): True, (12, 11): True, (13, 11): True, (14, 11): True,

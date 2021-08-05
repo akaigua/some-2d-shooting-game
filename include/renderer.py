@@ -13,7 +13,7 @@ def render(surface, n: dict):
 class BackgroundChanger:
 
     def __init__(self):
-        self.background_id = 1
+        self.background_id = 0
 
     def background(self, id:int = None):
         if id != self.background_id:
