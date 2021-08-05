@@ -2,7 +2,6 @@ import pygame
 import time
 import random
 import include.rooms
-#import include.physics
 
 
 # from PIL import Image
@@ -31,7 +30,7 @@ class Player(pygame.sprite.Sprite):
         self.y = self.SCREEN_H - self.h - 53  # Why you did this to me
         self.abs_y = self.SCREEN_H - self.y
         # self.y = 0
-        self.speedx = 2
+        self.speedx = 4
         self.speedy = 4
         self.hp = max_hp
         self.distance = self.x - mx
@@ -55,10 +54,8 @@ class Player(pygame.sprite.Sprite):
             self.y -= self.speedy
         '''''
             # self.y = -self.speedy
-        #if self.x + self.w > self.SCREEN_W:
-            #right = False
-
-        #p = physic_handling(last_latency, r)
+        if self.x + self.w > self.SCREEN_W:
+            right = False
 
         if self.x < 0:
             left = False
@@ -141,7 +138,7 @@ class Monster(pygame.sprite.Sprite):
         self.speedy = 0
         self.hp = hp
         self.strength = strength
-    '''
+
     def move(self):
         if self.hp <= 50 or abs(self.distance) < 40:
             # when the monster is angery
@@ -151,7 +148,7 @@ class Monster(pygame.sprite.Sprite):
                 self.speedx -= 0.5
             else:
                 self.speedx == 0
-    '''
+
     def display_direction(self):
         # lack of photo now
         if self.speedX >= 0:
@@ -172,7 +169,7 @@ class Monster(pygame.sprite.Sprite):
     def update(self, Px, Php):
         self.distance = self.x - Px
         self.Php = Php
-    '''
+
     def collide(self, m):
         WIDTH = 1000
         HEIGHT = int(WIDTH * 2 / 3)
@@ -190,8 +187,8 @@ class Monster(pygame.sprite.Sprite):
         if abs(self.distance) < 25:
             self.Php -= self.strength
             time.sleep(round(random.uniform(0.7, 1), 3))
-    '''
+        
 
     def draw(self, surface):
         # renderer((self.x, self.y), )
-        surface.blit(self.status_avatar, (self.x, self.y))
+        surface.blit(self.image, (self.x, self.y))

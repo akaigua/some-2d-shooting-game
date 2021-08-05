@@ -2,7 +2,7 @@ import include.Character
 import include.rooms
 import numpy as np
 
-G = 37
+G = 10
 
 WIDTH = 1000
 HEIGHT = int(WIDTH * 2 / 3)
@@ -20,6 +20,8 @@ class physics:
         # print((int((self.c.x + w)/WIDTH*18-1), (int((self.c.y + h)/HEIGHT*12))))
         if m.room_structure.get((int((self.c.x + w) / WIDTH * 18 - 1), (int((self.c.y + h) / HEIGHT * 12))), None):
             self.in_air_time = 0
+            print(\n)
+            print()
         else:
             self.in_air_time += lat
 
