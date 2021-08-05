@@ -37,11 +37,11 @@ def main():
     # background = pygame.transform.scale(background, (WIDTH, HEIGHT))
     running = True
 
-    c = include.Character.Player(max_hp=random.randint(15, 20), mx=5, strength=random.randint(5, 7))
+    c = include.Character.Player(max_hp=random.randint(15, 20), strength=random.randint(5, 7))
     p = include.physics.physics(c)
     # r = include.rooms.Room(1)
-    r1,r2,r3,r4,r5 = [include.rooms.Room(i) for i in range(1,6)]
-    rs = {1:r1,2:r2,3:r3,4:r4,5:r5}
+    r1, r2, r3, r4, r5 = [include.rooms.Room(i) for i in range(1, 6)]
+    rs = {1: r1, 2: r2, 3: r3, 4: r4, 5: r5}
     bg = include.renderer.BackgroundChanger()
     controller = include.controller.input_handling()
     start, end = 0, 0.1
@@ -57,11 +57,18 @@ def main():
             c.y = HEIGHT - c.h - 53
             c.x = 0
 
+        # Draw Monster
+
+        monster_list = [include.Character.Monster(i) for i in include.rooms.Room.Monster_Dic[bg_id].keys()]
+        # print(monster_list[0].x,monster_list[0].y)
+        print(bg_id)
+        monster_render_list = {(mons.x/18*WIDTH, mons.y/12*HEIGHT): mons.status_avatar for mons in monster_list}
+
         last_latency = end - start
         start = time.time()
-        left, right, up, attack, leave, stop_move_left, stop_move_right = controller.check_event()
+        left, right, up, attack, leave, stop_move_left, stop_move_right, timer = controller.check_event()
         # print(left, right, up, attack, leave, stop_move_left, stop_move_right)
-        left_col,right_col = p.side_by_side(r)
+        left_col, right_col = p.side_by_side(r)
         head = p.head_by_head(r)
         if leave:
             running = False
@@ -77,12 +84,13 @@ def main():
             c.status_avatar = c.stand_right
         if up and not head:
             c.y -= c.speedy
-        c.y = p.physic_handling(last_latency,r)
+        c.y = p.physic_handling(last_latency, r)
         if attack:
             print(f"[INFO] Player has attacked")
 
         surface.blit(background, (0, 0))
         surface = include.renderer.render(surface=surface, n={(c.x, c.y): c.status_avatar})
+        surface = include.renderer.render(surface=surface, n=monster_render_list)
         pygame.display.flip()
         end = time.time()
         # FPS display

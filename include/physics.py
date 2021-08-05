@@ -1,6 +1,7 @@
 import include.Character
 import include.rooms
 import numpy as np
+import math
 
 G = 10
 
@@ -47,22 +48,26 @@ class physics:
                 (right_side_block, head + 1), None) or m.room_structure.get((right_side_block, head + 2), None):
             right_side_collide = True
 
-        return [left_side_collide,right_side_collide]
+        return [left_side_collide, right_side_collide]
 
-    def head_by_head(self, m:include.rooms.Room):
+    def head_by_head(self, m: include.rooms.Room):
         head = int((self.c.y / HEIGHT) * 12)
         left_side = self.c.x
         left_side_block = int(left_side / WIDTH * 18)
 
         head_collide = False
 
-        if m.room_structure.get((left_side_block,head),None):
+        if m.room_structure.get((left_side_block, head), None):
             head_collide = True
 
         return head_collide
 
-
-
     def physic_handling(self, latency: float, m: include.rooms.Room):
         self.__in_air(latency, m)
         return self.c.y + 0.25 * G * (self.in_air_time ** 2)
+
+
+def collideDetect(a, b):
+    if math.sqrt((a.x - b.x) ** 2 + (a.y - b.y) ** 2) <= 10:
+        return True
+    return False

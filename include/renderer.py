@@ -18,7 +18,6 @@ class BackgroundChanger:
     def background(self, id:int = None):
         if id != self.background_id:
             self.background_id = id
-        print(f"../assets/backgrounds/background_{self.background_id}.jpg")
         background = pygame.image.load(f"./assets/backgrounds/background_{self.background_id}.jpg")
         background = pygame.transform.scale(background, (WIDTH, HEIGHT))
         return background
