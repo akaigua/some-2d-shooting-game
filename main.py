@@ -46,6 +46,7 @@ def main():
     controller = include.controller.input_handling()
     start, end = 0, 0.1
     bg_id = 1
+    monster_list = [include.Character.Monster(i) for i in include.rooms.Room.Monster_Dic[bg_id].keys()]
     while running:
         r = rs[bg_id]
         background = bg.background(bg_id)
@@ -59,7 +60,7 @@ def main():
 
         # Draw Monster
 
-        monster_list = [include.Character.Monster(i) for i in include.rooms.Room.Monster_Dic[bg_id].keys()]
+        # monster_list = [include.Character.Monster(i) for i in include.rooms.Room.Monster_Dic[bg_id].keys()]
         monster_render_list = {(mons.x/18*WIDTH, mons.y/12*HEIGHT): mons.status_avatar for mons in monster_list}
 
         last_latency = end - start

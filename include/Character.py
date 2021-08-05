@@ -4,7 +4,7 @@ import random
 import include.rooms
 import random
 
-MONSTER_SPEED = 10
+MONSTER_SPEED = 0.01
 
 
 # from PIL import Image
@@ -142,16 +142,18 @@ class Monster(pygame.sprite.Sprite):
         self.speedy = 0
         # self.hp = hp
         # self.strength = strength
-        self.face_right = True
+        self.face_right = False
         self.last_move = 0
 
     def move(self,lat):
-        self.last_move += lat
+        self.last_move = lat + self.last_move
         if self.last_move >= 2:
             if self.face_right:
+                print("hello?")
                 self.status_avatar = self.move_left
                 self.x -= MONSTER_SPEED
             else:
+                print("hello!")
                 self.x += MONSTER_SPEED
                 self.status_avatar = self.move_right
         if self.last_move > 3:
