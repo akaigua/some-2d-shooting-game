@@ -60,16 +60,16 @@ def main():
         # Draw Monster
 
         monster_list = [include.Character.Monster(i) for i in include.rooms.Room.Monster_Dic[bg_id].keys()]
-        # print(monster_list[0].x,monster_list[0].y)
-        print(bg_id)
         monster_render_list = {(mons.x/18*WIDTH, mons.y/12*HEIGHT): mons.status_avatar for mons in monster_list}
-        
+
         last_latency = end - start
         start = time.time()
         left, right, up, attack, leave, stop_move_left, stop_move_right, timer, reset = controller.check_event()
         # print(left, right, up, attack, leave, stop_move_left, stop_move_right)
         left_col, right_col = p.side_by_side(r)
         head = p.head_by_head(r)
+        for i in monster_list:
+            i.move(last_latency)
         if leave:
             running = False
         if left and not left_col:
