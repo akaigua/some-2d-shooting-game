@@ -66,7 +66,7 @@ def main():
 
         last_latency = end - start
         start = time.time()
-        left, right, up, attack, leave, stop_move_left, stop_move_right, timer = controller.check_event()
+        left, right, up, attack, leave, stop_move_left, stop_move_right, timer, reset = controller.check_event()
         # print(left, right, up, attack, leave, stop_move_left, stop_move_right)
         left_col, right_col = p.side_by_side(r)
         head = p.head_by_head(r)
