@@ -35,7 +35,7 @@ def main():
     os.getcwd()
     pygame.mixer.init()
     surface = pygame.display.set_mode((WIDTH, HEIGHT))
-    pygame.display.set_caption("Some 2D Shooting Game")
+    pygame.display.set_caption("Buggy Buggy")
     # background = pygame.image.load("./assets/backgrounds/background_1.jpg")
     # background = pygame.image.load("./assets/debug_resource/debug_m1.png")
     # background = pygame.transform.scale(background, (WIDTH, HEIGHT))
@@ -47,7 +47,7 @@ def main():
     # r = include.rooms.Room(1)
     r0, r1, r2, r3, r4, r5, r6, r7, r8, r9 = [include.rooms.Room(i) for i in range(10)]
     rs = {0: r0, 1: r1, 2: r2, 3: r3, 4: r4, 5: r5, 6: r6, 7: r7, 8: r8, 9: r9}
-    bg_id = 0
+    bg_id = 5
     bg = include.renderer.BackgroundChanger()
     controller = include.controller.input_handling(bg_id)
     start, end = 0, 0.1
@@ -88,7 +88,7 @@ def main():
             if leave:
                 running = False
 
-        elif bg_id == 5 and 6 * 32 * (1000 / 576) <= c.x <= 13 * 32 * (1000 / 576) and c.y >= 9 * 32 * (667 / 384):
+        elif bg_id == 5 and 6 * 32 * (1000 / 576) <= c.x <= 12 * 32 * (1000 / 576) and c.y >= 9 * 32 * (667 / 384):
             print(c.x, c.y)
             bg_id = 6
             surface.blit(background, (0, 0))
@@ -130,7 +130,7 @@ def main():
                 c.x, c.y = 0, HEIGHT - c.h - 53
             if leave:
                 running = False
-            if c.x == WIDTH and 0 < bg_id < 5:
+            if c.x == WIDTH and 0 < bg_id <= 5:
                 bg_id += 1
                 c.y = HEIGHT - c.h - 53
                 c.x = 0
