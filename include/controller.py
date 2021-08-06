@@ -1,12 +1,12 @@
 import pygame
 
-
 class input_handling:
-    def __init__(self):
+    def __init__(self,bd_id):
         self.left, self.right, self.up, self.attack, self.leave, self.timer = [False] * 6
         self.stop_move_left = False
         self.stop_move_right = False
         self.reset = False
+        self.bd_id = bd_id
 
     def check_event(self):
         # we don't need these two lines
@@ -32,6 +32,10 @@ class input_handling:
                     self.timer = True
                 if event.key == pygame.K_SPACE:
                     self.reset = True
+                if event.key == pygame.K_1 and event.key == pygame.K_TAB:
+                    bg_id = 1
+                if event.key == pygame.K_5 and event.key == pygame.K_TAB:
+                    bg_id = 5
             if event.type == pygame.KEYUP:
                 # You don't need this
                 # if event.key == pygame.K_ESCAPE:
@@ -50,4 +54,34 @@ class input_handling:
                     # self.stop_move = True
 
 
-        return [self.left, self.right, self.up, self.attack, self.leave, self.stop_move_left, self.stop_move_right, self.timer, self.reset]
+        return [self.left, self.right, self.up, self.attack, self.leave, self.stop_move_left, self.stop_move_right, self.timer, self.reset, self.bd_id]
+
+
+    def check_mouse(self, bg_id, blue_screen):
+        # we don't need these two lines
+        # self.attack = False
+        # self.stop_move_right,self.stop_move_right = [False] * 2
+        for event in pygame.event.get():
+            if event.type == pygame.QUIT:
+                pygame.quit()
+                exit()
+                self.leave = True
+            if event.type == pygame.MOUSEBUTTONDOWN:
+                print('yes button')
+                x1, y1 = pygame.mouse.get_pos()
+                print(x1, y1)
+                if 176 <= x1 * (576 / 1000) <= 385 and 153 <= y1 * (384 / 667) <= 187:  # start
+                    print('start')
+                    bg_id += 1
+                    return 1, blue_screen
+                if 49 <= x1 * (576 / 1000) <= 104 * 576 / 1000 and 299 <= y1 * (384 / 667)  <= 324:  # quit
+                    pygame.quit()
+                    exit()
+                if 176 <= x1 * (576 / 1000) <= 385 and 197 <= y1 * (384 / 667)  <= 230:  # continue
+                    print('continue')
+                    blue_screen = True
+                if 176 <= x1 * (576 / 1000) <= 385 and 240 <= y1 * (384 / 667)  <= 275:  # option
+                    print('option')
+                    blue_screen = True
+
+        return bg_id, blue_screen
