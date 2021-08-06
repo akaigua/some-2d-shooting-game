@@ -33,8 +33,8 @@ class Player(pygame.sprite.Sprite):
         self.y = self.SCREEN_H - self.h - 53  # Why you did this to me
         self.abs_y = self.SCREEN_H - self.y
         # self.y = 0
-        self.speedx = 5
-        self.speedy = 5
+        self.speedx = 4
+        self.speedy = 4
         self.hp = max_hp
         # self.distance = self.x - mx
         self.strength = strength
@@ -59,7 +59,7 @@ class Player(pygame.sprite.Sprite):
         if self.x + self.w - 40 > self.SCREEN_W:
             right = False
 
-        if self.x + 24 < 0:
+        if self.x < 0:
             left = False
 
         if self.y < 0:
@@ -70,8 +70,6 @@ class Player(pygame.sprite.Sprite):
             self.status_avatar = self.move_left
 
         if right and not right_col:
-            print('collide', right_col)
-            print('right', right)
             self.x += self.speedx
             self.status_avatar = self.move_right
 
@@ -145,6 +143,7 @@ class Monster(pygame.sprite.Sprite):
         self.face_right = False
         self.last_move = 0
 
+    '''
     def move(self, lat):
         self.last_move = lat + self.last_move
         if self.last_move >= 0.5:  # change this plz
@@ -157,7 +156,7 @@ class Monster(pygame.sprite.Sprite):
         if self.last_move > 1:  # change this plz
             self.last_move = 0
             self.face_right = not self.face_right
-
+    '''
     #
     # def update(self, Px, Php):
     #     self.distance = self.x - Px
