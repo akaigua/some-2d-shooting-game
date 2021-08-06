@@ -7,6 +7,7 @@ import include.physics
 import random
 import time
 import math
+import os
 
 # import utils.pic_compressor
 
@@ -31,6 +32,8 @@ SCALE = 0.7
 
 def main():
     pygame.init()
+    os.getcwd()
+    pygame.mixer.init()
     surface = pygame.display.set_mode((WIDTH, HEIGHT))
     pygame.display.set_caption("Some 2D Shooting Game")
     # background = pygame.image.load("./assets/backgrounds/background_1.jpg")
@@ -42,14 +45,17 @@ def main():
     c = include.Character.Player(max_hp=random.randint(15, 20), strength=random.randint(5, 7))
     p = include.physics.physics(c)
     # r = include.rooms.Room(1)
-    r0, r1, r2, r3, r4, r5 = [include.rooms.Room(i) for i in range(6)]
-    rs = {0: r0, 1: r1, 2: r2, 3: r3, 4: r4, 5: r5}
-    bg = include.renderer.BackgroundChanger()
-    controller = include.controller.input_handling()
-    start, end = 0, 0.1
+    r0, r1, r2, r3, r4, r5, r6, r7, r8, r9 = [include.rooms.Room(i) for i in range(10)]
+    rs = {0: r0, 1: r1, 2: r2, 3: r3, 4: r4, 5: r5, 6: r6, 7: r7, 8: r8, 9: r9}
     bg_id = 0
-    if 0 < bg_id <= 5:
-        monster_list = [include.Character.Monster(i) for i in include.rooms.Room.Monster_Dic[bg_id].keys()]
+    bg = include.renderer.BackgroundChanger()
+    controller = include.controller.input_handling(bg_id)
+    start, end = 0, 0.1
+    SoundObj = pygame.mixer.music.load("assets/Christopher Larkin - Nightmare King.mp3")
+    pygame.mixer.music.play(-1)
+
+    #if 0 < bg_id <= 5:
+        #monster_list = [include.Character.Monster(i) for i in include.rooms.Room.Monster_Dic[bg_id].keys()]
 
 
     while running:
@@ -58,50 +64,76 @@ def main():
         # if c.x == 0 and bg_id > 1:
         #     bg_id -= 1
         #     c.y = HEIGHT - c.h - 53
-        if c.x == WIDTH and bg_id < 5:
-            bg_id += 1
-            c.y = HEIGHT - c.h - 53
-            c.x = 0
+        #left, right, up, attack, leave, stop_move_left, stop_move_right, timer, reset, background_id = controller.check_event()
+        #bg_id = background_id
         if blue_screen:
             background = pygame.image.load(f"./assets/backgrounds/blue_screen.png")
             background = pygame.transform.scale(background, (WIDTH, HEIGHT))
-            time.sleep(5)
+            time.sleep(3)
+            surface.blit(background, (0, 0))
+            pygame.display.flip()
+            time.sleep(10)
             running = False
-        
-        if bg_id == 0:
-            buttons = pygame.mouse.get_pressed()
-            x1, y1 = pygame.mouse.get_pos()
-            if 176 <= x1 <= 385 and 153 <= y1 <= 187:#start
-                if buttons[0]:
-                    bg_id += 1
-            elif 49 <= x1 <= 104 and 299 <= y1 <= 324: #quit
-                if buttons[0]:
-                    pygame.quit()
-                    exit()
-            elif 176 <= x1 <= 385 and 197 <= y1 <= 230: #continue
-                if buttons[0]:
-                    time.sleep(2)
-                    blue_screen = True
-            elif 176 <= x1 <= 385 and 240 <= y1 <= 275: #option
-                if buttons[0]:
-                    time.sleep(2)
-                    blue_screen = True
-                    
 
         # monster_list = [include.Character.Monster(i) for i in include.rooms.Room.Monster_Dic[bg_id].keys()]
-        if 0 < bg_id <= 5:
+        if bg_id == 0:
+            bg_id, blue_screen = controller.check_mouse(0, False)
+            surface.blit(background, (0, 0))
+            pygame.display.flip()
+            end = time.time()
+            left, right, up, attack, leave, stop_move_left, stop_move_right, timer, reset, background_id = controller.check_event()
+            #if bg_id != background_id:
+                #bg_id = background_id
+            # bg_id = bg
+            if leave:
+                running = False
+
+        elif bg_id == 5 and 6 * 32 * (1000 / 576) <= c.x <= 13 * 32 * (1000 / 576) and c.y >= 9 * 32 * (667 / 384):
+            print(c.x, c.y)
+            bg_id = 6
+            surface.blit(background, (0, 0))
+            pygame.display.flip()
+            time.sleep(0.2)
+            bg_id = 7
+            surface.blit(background, (0, 0))
+            pygame.display.flip()
+            time.sleep(0.2)
+            bg_id = 8
+            time.sleep(0.2)
+            surface.blit(background, (0, 0))
+            pygame.display.flip()
+            time.sleep(0.2)
+            bg_id = 9
+            surface.blit(background, (0, 0))
+            pygame.display.flip()
+            #time.sleep(1)
+            #running = False
+            #bg_id += 1
+
+        elif bg_id > 9:
+            running = False
+
+        else:
+            monster_list = [include.Character.Monster(i) for i in include.rooms.Room.Monster_Dic[bg_id].keys()]
             monster_render_list = {(mons.x/18*WIDTH, mons.y/12*HEIGHT): mons.status_avatar for mons in monster_list}
 
             last_latency = end - start
             start = time.time()
-            left, right, up, attack, leave, stop_move_left, stop_move_right, timer, reset = controller.check_event()
+            left, right, up, attack, leave, stop_move_left, stop_move_right, timer, reset, background_id = controller.check_event()
             # print(left, right, up, attack, leave, stop_move_left, stop_move_right)
             left_col, right_col = p.side_by_side(r)
             head = p.head_by_head(r)
-            for i in monster_list:
-                i.move(last_latency)
+            #for i in monster_list:
+                #i.move(last_latency)
+
+            if reset == True:
+                c.x, c.y = 0, HEIGHT - c.h - 53
             if leave:
                 running = False
+            if c.x == WIDTH and 0 < bg_id < 5:
+                bg_id += 1
+                c.y = HEIGHT - c.h - 53
+                c.x = 0
             '''
             if left and not left_col:
                 c.x -= c.speedx
@@ -117,29 +149,32 @@ def main():
                 c.y -= c.speedy
             '''
             c.y = p.physic_handling(last_latency, r)
-            if attack:
-                print(f"[INFO] Player has attacked")
-            
+            #if attack:
+            #    print(f"[INFO] Player has attacked")
+
+            collides = []
+            for i in monster_list:
+                collides.append(math.sqrt((i.x / 18 * WIDTH - c.x) ** 2 + (i.y / 12 * HEIGHT - c.y) ** 2))
+                #print(min(collides))
+            if collides != []:
+                if min(collides) < 60:
+                    # dead
+                    p.in_air_time += last_latency
+                    c.y + 0.25 * 40 * (p.in_air_time ** 2)
+                    bg_id = 1
+                    c.y = HEIGHT - c.h - 53
+                    c.x = 0
+
+            surface.blit(background, (0, 0))
             c.move(left, right, up, stop_move_left, stop_move_right, left_col, right_col, head)
             surface = include.renderer.render(surface=surface, n={(c.x, c.y): c.status_avatar})
             surface = include.renderer.render(surface=surface, n=monster_render_list)
-            
-        surface.blit(background, (0, 0))
-        pygame.display.flip()
-        end = time.time()
-        # print(math.sqrt((i.x-c.x)**2 + (i.y-c.y)**2))
-        if 0 < bg_id <= 5:
-            collides = []
-            for i in monster_list:
-                collides.append(math.sqrt((i.x/18*WIDTH-c.x)**2 + (i.y/12*HEIGHT-c.y)**2))
-            if min(collides) < 30:
-                # dead 
-                p.in_air_time += p.lat
-                c.y + 0.25 * G * (p.in_air_time ** 2)
-                bg_id += 1
-                c.y = HEIGHT - c.h - 53
-                c.x = 0
+            pygame.display.flip()
+            #print(1 / last_latency)
+            end = time.time()
 
+
+        # print(math.sqrt((i.x-c.x)**2 + (i.y-c.y)**2))
 
         # FPS display
         # print(f"[INFO] FPS: {1/last_latency}")
