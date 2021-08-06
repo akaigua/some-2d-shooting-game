@@ -56,8 +56,8 @@ class Player(pygame.sprite.Sprite):
         '''''
 
         # self.y = -self.speedy
-        if self.x + self.w - 40 > self.SCREEN_W:
-            right = False
+        #if self.x + self.w - 40 > self.SCREEN_W:
+            #right = False
 
         if self.x < 0:
             left = False
