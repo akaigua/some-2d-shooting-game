@@ -33,8 +33,8 @@ class Player(pygame.sprite.Sprite):
         self.y = self.SCREEN_H - self.h - 53  # Why you did this to me
         self.abs_y = self.SCREEN_H - self.y
         # self.y = 0
-        self.speedx = 4
-        self.speedy = 4
+        self.speedx = 5
+        self.speedy = 5
         self.hp = max_hp
         # self.distance = self.x - mx
         self.strength = strength
@@ -56,8 +56,8 @@ class Player(pygame.sprite.Sprite):
         '''''
 
         # self.y = -self.speedy
-        #if self.x + self.w - 40 > self.SCREEN_W:
-            #right = False
+        if self.x + self.w - 40 > self.SCREEN_W:
+            right = False
 
         if self.x < 0:
             left = False

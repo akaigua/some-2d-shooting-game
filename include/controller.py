@@ -1,4 +1,5 @@
 import pygame
+import time
 
 class input_handling:
     def __init__(self,bd_id):
@@ -17,6 +18,8 @@ class input_handling:
             self.stop_move_right, self.stop_move_left = [False] * 2
             if event.type == pygame.QUIT:
                 self.leave = True
+                #pygame.quit()
+                exit()
             if event.type == pygame.KEYDOWN:
                 if event.key == pygame.K_ESCAPE:
                     self.leave = True
@@ -63,9 +66,9 @@ class input_handling:
         # self.stop_move_right,self.stop_move_right = [False] * 2
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
-                pygame.quit()
-                exit()
                 self.leave = True
+                #pygame.quit()
+                exit()
             if event.type == pygame.MOUSEBUTTONDOWN:
                 print('yes button')
                 x1, y1 = pygame.mouse.get_pos()
@@ -73,8 +76,12 @@ class input_handling:
                 if 176 <= x1 * (576 / 1000) <= 385 and 153 <= y1 * (384 / 667) <= 187:  # start
                     print('start')
                     bg_id += 1
-                    return 1, blue_screen
-                if 49 <= x1 * (576 / 1000) <= 104 * 576 / 1000 and 299 <= y1 * (384 / 667)  <= 324:  # quit
+                    time_start1 = time.time()
+                    return 1, blue_screen, False
+                if 49 <= x1 * (576 / 1000) <= 104 and 299 <= y1 * (384 / 667)  <= 324:
+                    print('quit')
+                    # quit
+                    self.leave = True
                     pygame.quit()
                     exit()
                 if 176 <= x1 * (576 / 1000) <= 385 and 197 <= y1 * (384 / 667)  <= 230:  # continue
@@ -84,4 +91,4 @@ class input_handling:
                     print('option')
                     blue_screen = True
 
-        return bg_id, blue_screen
+        return bg_id, blue_screen, self.leave

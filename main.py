@@ -41,13 +41,14 @@ def main():
     # background = pygame.transform.scale(background, (WIDTH, HEIGHT))
     running = True
     blue_screen = False
+    wasted = False
 
     c = include.Character.Player(max_hp=random.randint(15, 20), strength=random.randint(5, 7))
     p = include.physics.physics(c)
     # r = include.rooms.Room(1)
     r0, r1, r2, r3, r4, r5, r6, r7, r8, r9 = [include.rooms.Room(i) for i in range(10)]
     rs = {0: r0, 1: r1, 2: r2, 3: r3, 4: r4, 5: r5, 6: r6, 7: r7, 8: r8, 9: r9}
-    bg_id = 5
+    bg_id = 0
     bg = include.renderer.BackgroundChanger()
     controller = include.controller.input_handling(bg_id)
     start, end = 0, 0.1
@@ -72,12 +73,24 @@ def main():
             time.sleep(3)
             surface.blit(background, (0, 0))
             pygame.display.flip()
-            time.sleep(10)
+            time.sleep(4)
             running = False
+            pygame.quit()
+        if wasted:
+            background = pygame.image.load(f"./assets/backgrounds/wasted.jpeg")
+            background = pygame.transform.scale(background, (WIDTH, HEIGHT))
+            left, right, up, attack, leave, stop_move_left, stop_move_right, timer, reset, background_id = controller.check_event()
+            if reset:
+                wasted = False
+            #time.sleep(2)
+            #wasted = False
 
         # monster_list = [include.Character.Monster(i) for i in include.rooms.Room.Monster_Dic[bg_id].keys()]
         if bg_id == 0:
-            bg_id, blue_screen = controller.check_mouse(0, False)
+            bg_id, blue_screen, leave = controller.check_mouse(0, False)
+            if leave:
+                running = False
+                pygame.quit()
             surface.blit(background, (0, 0))
             pygame.display.flip()
             end = time.time()
@@ -87,9 +100,15 @@ def main():
             # bg_id = bg
             if leave:
                 running = False
+                pygame.quit()
+                #pygame.quit()
 
-        elif bg_id == 5 and 6 * 32 * (1000 / 576) <= c.x <= 12 * 32 * (1000 / 576) and c.y >= 9 * 32 * (667 / 384):
+        elif bg_id == 5 and 6 * 32 * (1000 / 576) <= c.x <= 13 * 32 * (1000 / 576) and c.y >= 9 * 32 * (667 / 384):
             print(c.x, c.y)
+            left, right, up, attack, leave, stop_move_left, stop_move_right, timer, reset, background_id = controller.check_event()
+            if leave:
+                running = False
+                pygame.quit()
             bg_id = 6
             surface.blit(background, (0, 0))
             pygame.display.flip()
@@ -112,6 +131,8 @@ def main():
 
         elif bg_id > 9:
             running = False
+            pygame.quit()
+            exit()
 
         else:
             monster_list = [include.Character.Monster(i) for i in include.rooms.Room.Monster_Dic[bg_id].keys()]
@@ -130,7 +151,8 @@ def main():
                 c.x, c.y = 0, HEIGHT - c.h - 53
             if leave:
                 running = False
-            if c.x == WIDTH and 0 < bg_id <= 5:
+                pygame.quit()
+            if c.x == WIDTH and 0 < bg_id < 5:
                 bg_id += 1
                 c.y = HEIGHT - c.h - 53
                 c.x = 0
@@ -159,6 +181,7 @@ def main():
             if collides != []:
                 if min(collides) < 60:
                     # dead
+                    wasted = True
                     p.in_air_time += last_latency
                     c.y + 0.25 * 40 * (p.in_air_time ** 2)
                     bg_id = 1
@@ -166,12 +189,18 @@ def main():
                     c.x = 0
 
             surface.blit(background, (0, 0))
-            c.move(left, right, up, stop_move_left, stop_move_right, left_col, right_col, head)
-            surface = include.renderer.render(surface=surface, n={(c.x, c.y): c.status_avatar})
-            surface = include.renderer.render(surface=surface, n=monster_render_list)
+            if wasted == False:
+                c.move(left, right, up, stop_move_left, stop_move_right, left_col, right_col, head)
+                surface = include.renderer.render(surface=surface, n={(c.x, c.y): c.status_avatar})
+                surface = include.renderer.render(surface=surface, n=monster_render_list)
             pygame.display.flip()
             #print(1 / last_latency)
             end = time.time()
+            '''
+            time_end = time.time()
+            on_going = time_end - time_start
+            print(on_going)
+            '''
 
 
         # print(math.sqrt((i.x-c.x)**2 + (i.y-c.y)**2))
